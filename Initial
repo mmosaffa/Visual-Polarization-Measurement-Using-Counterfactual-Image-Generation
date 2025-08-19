@@ -2,11 +2,18 @@ import os
 import zipfile
 import requests
 
+# Google Drive direct-download links
 CSV_URL = "https://drive.google.com/uc?export=download&id=1VLKIx58fEqJZ3ButMooVtRBa9_8CZdSl"
+FINAL_CSV_URL = "https://drive.google.com/uc?export=download&id=1Y--w5iLYjI2ir1Vk-tblAwB4Flf9o59T"
 ZIP_URL = "https://drive.google.com/uc?export=download&id=1yv6A7IgkxR7cqQ7pKyDC5VUtlzuZJo9v"
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1ebV82V-8ZprrV0h59t3X7SUhfoqMUHnL"
+COUNTERFACTUALS_URL = "https://drive.google.com/uc?export=download&id=1eGvsBXh62PTi4d4RxVMDjIqiuBUNiBKO"
 
+# Folder structure
 DATA_DIR = "data"
+MODEL_DIR = "model"
 os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(MODEL_DIR, exist_ok=True)
 
 def download_file(url, save_path):
     if not os.path.exists(save_path):
@@ -17,19 +24,36 @@ def download_file(url, save_path):
                 f.write(chunk)
         print(f"Saved {save_path}")
     else:
-        print(f"{save_path} already exists. Skipping download.")
+        print(f"{save_path} already exists. Skipping.")
 
+def extract_and_cleanup(zip_path, extract_dir):
+    if not os.path.exists(extract_dir):
+        print(f"Extracting {zip_path}...")
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
+            zip_ref.extractall(extract_dir)
+        print(f"Extracted to {extract_dir}")
+        os.remove(zip_path)  # delete zip after extraction
+    else:
+        print(f"{extract_dir} already exists. Skipping extraction.")
+
+# 1. Cleaned CSV
 csv_path = os.path.join(DATA_DIR, "cleaned_data.csv")
 download_file(CSV_URL, csv_path)
 
+# 2. Final CSV
+final_csv_path = os.path.join(DATA_DIR, "final_data.csv")
+download_file(FINAL_CSV_URL, final_csv_path)
+
+# 3. Images ZIP → data/images/
 zip_path = os.path.join(DATA_DIR, "images.zip")
 download_file(ZIP_URL, zip_path)
+extract_and_cleanup(zip_path, os.path.join(DATA_DIR, "images"))
 
-images_dir = os.path.join(DATA_DIR, "images")
-if not os.path.exists(images_dir):
-    print("Extracting images...")
-    with zipfile.ZipFile(zip_path, "r") as zip_ref:
-        zip_ref.extractall(images_dir)
-    print("Extraction complete.")
-else:
-    print("Images already extracted.")
+# 4. Trained Model
+model_path = os.path.join(MODEL_DIR, "ML_Model.pth")
+download_file(MODEL_URL, model_path)
+
+# 5. Counterfactuals ZIP → data/counterfactuals/
+cf_zip_path = os.path.join(DATA_DIR, "counterfactuals.zip")
+download_file(COUNTERFACTUALS_URL, cf_zip_path)
+extract_and_cleanup(cf_zip_path, os.path.join(DATA_DIR, "counterfactuals"))
