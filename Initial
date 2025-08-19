@@ -1,0 +1,35 @@
+import os
+import zipfile
+import requests
+
+CSV_URL = "https://drive.google.com/uc?export=download&id=1VLKIx58fEqJZ3ButMooVtRBa9_8CZdSl"
+ZIP_URL = "https://drive.google.com/uc?export=download&id=1yv6A7IgkxR7cqQ7pKyDC5VUtlzuZJo9v"
+
+DATA_DIR = "data"
+os.makedirs(DATA_DIR, exist_ok=True)
+
+def download_file(url, save_path):
+    if not os.path.exists(save_path):
+        print(f"Downloading {url}...")
+        r = requests.get(url, stream=True)
+        with open(save_path, "wb") as f:
+            for chunk in r.iter_content(1024):
+                f.write(chunk)
+        print(f"Saved {save_path}")
+    else:
+        print(f"{save_path} already exists. Skipping download.")
+
+csv_path = os.path.join(DATA_DIR, "cleaned_data.csv")
+download_file(CSV_URL, csv_path)
+
+zip_path = os.path.join(DATA_DIR, "images.zip")
+download_file(ZIP_URL, zip_path)
+
+images_dir = os.path.join(DATA_DIR, "images")
+if not os.path.exists(images_dir):
+    print("Extracting images...")
+    with zipfile.ZipFile(zip_path, "r") as zip_ref:
+        zip_ref.extractall(images_dir)
+    print("Extraction complete.")
+else:
+    print("Images already extracted.")
