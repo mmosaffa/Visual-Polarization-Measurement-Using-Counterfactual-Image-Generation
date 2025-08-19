@@ -6,62 +6,50 @@ This paper, we introduce the Polarization Measurement Using Counterfactual Image
 
 # 📂 Data Setup
 
-# This project relies on two dataset files:
-# - A ZIP archive of images
-# - A cleaned CSV file that matches each image ID
-# 
-# You can prepare the dataset in two ways:
+# Two required files:
+#  - cleaned_data.csv
+#  - images.zip (with all images)
 
-# ------------------------------------------------
+# =================================================
 # 🔹 Option 1: Automatic Download (Recommended)
-# ------------------------------------------------
+# =================================================
 
-# 1. Install the required dependency
 pip install requests
-
-# 2. Run the setup script
 python Initial/setup_data.py
 
-# This will:
-# - Download the CSV file into data/cleaned_data.csv
-# - Download the ZIP file into data/images.zip
-# - Extract the images into data/images/
-
-# After running, your folder structure will look like:
+# -> Downloads cleaned_data.csv and images.zip
+# -> Extracts images/ automatically
+# Result:
 # data/
-#  ├── cleaned_data.csv
-#  └── images/
-#       ├── 0001.jpg
-#       ├── 0002.jpg
-#       └── ...
+#   ├── cleaned_data.csv
+#   └── images/
+#        ├── 0001.jpg
+#        ├── 0002.jpg
+#        └── ...
 
-# ------------------------------------------------
+# =================================================
 # 🔹 Option 2: Manual Download
-# ------------------------------------------------
+# =================================================
 
-# 1. Download manually from Google Drive:
+# Download from Google Drive:
 # - Images ZIP: https://drive.google.com/file/d/1yv6A7IgkxR7cqQ7pKyDC5VUtlzuZJo9v/view?usp=sharing
-# - Cleaned CSV: https://drive.google.com/file/d/1VLKIx58fEqJZ3ButMooVtRBa9_8CZdSl/view?usp=sharing
+# - CSV File : https://drive.google.com/file/d/1VLKIx58fEqJZ3ButMooVtRBa9_8CZdSl/view?usp=sharing
 
-# 2. Create a folder called "data/" in the project root
 mkdir data
-
-# 3. Place the files inside "data/" as follows:
+# Place files:
 # data/
-#  ├── cleaned_data.csv
-#  ├── images.zip
+#   ├── cleaned_data.csv
+#   ├── images.zip
 
-# 4. Unzip images.zip so the folder looks like:
+# Unzip manually so you get:
 # data/
-#  ├── cleaned_data.csv
-#  └── images/
-#       ├── 0001.jpg
-#       ├── 0002.jpg
-#       └── ...
+#   ├── cleaned_data.csv
+#   └── images/
+#        ├── 0001.jpg
+#        ├── 0002.jpg
+#        └── ...
 
-# ------------------------------------------------
-# ✅ Once the data is ready (by either method), 
-# you can open and run the Jupyter notebooks 
-# (Scraping.ipynb, Data_Cleaning.ipynb, etc.), 
-# and they will load the dataset correctly.
+# =================================================
+# ✅ Done! Now run the notebooks:
+# Scraping.ipynb, Data_Cleaning.ipynb, etc.
 
