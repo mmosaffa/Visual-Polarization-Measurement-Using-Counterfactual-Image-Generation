@@ -4,52 +4,36 @@ This paper, we introduce the Polarization Measurement Using Counterfactual Image
 
 
 
-# 📂 Data Setup
+📂 Data Setup
 
-# Two required files:
-#  - cleaned_data.csv
-#  - images.zip (with all images)
+Required files:
+- cleaned_data.csv
+- images.zip (with all images)
 
-# =================================================
-# 🔹 Option 1: Automatic Download (Recommended)
-# =================================================
-
+Option 1: Automatic Download (Recommended)
+------------------------------------------
 pip install requests
 python Initial/setup_data.py
+(Downloads CSV + ZIP and extracts into data/)
 
-# -> Downloads cleaned_data.csv and images.zip
-# -> Extracts images/ automatically
-# Result:
-# data/
-#   ├── cleaned_data.csv
-#   └── images/
-#        ├── 0001.jpg
-#        ├── 0002.jpg
-#        └── ...
-
-# =================================================
-# 🔹 Option 2: Manual Download
-# =================================================
-
-# Download from Google Drive:
-# - Images ZIP: https://drive.google.com/file/d/1yv6A7IgkxR7cqQ7pKyDC5VUtlzuZJo9v/view?usp=sharing
-# - CSV File : https://drive.google.com/file/d/1VLKIx58fEqJZ3ButMooVtRBa9_8CZdSl/view?usp=sharing
+Option 2: Manual Download
+-------------------------
+Download from:
+- Images ZIP: https://drive.google.com/file/d/1yv6A7IgkxR7cqQ7pKyDC5VUtlzuZJo9v/view?usp=sharing
+- CSV File : https://drive.google.com/file/d/1VLKIx58fEqJZ3ButMooVtRBa9_8CZdSl/view?usp=sharing
 
 mkdir data
-# Place files:
-# data/
-#   ├── cleaned_data.csv
-#   ├── images.zip
+Place files as:
+data/cleaned_data.csv
+data/images.zip
 
-# Unzip manually so you get:
-# data/
-#   ├── cleaned_data.csv
-#   └── images/
-#        ├── 0001.jpg
-#        ├── 0002.jpg
-#        └── ...
+Unzip manually:
+data/
+ ├── cleaned_data.csv
+ └── images/
+      ├── 0001.jpg
+      ├── 0002.jpg
+      └── ...
 
-# =================================================
-# ✅ Done! Now run the notebooks:
-# Scraping.ipynb, Data_Cleaning.ipynb, etc.
+✅ Done! Now run the notebooks (Scraping.ipynb, Data_Cleaning.ipynb, etc.)
 
