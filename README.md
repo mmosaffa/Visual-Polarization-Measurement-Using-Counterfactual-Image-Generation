@@ -4,17 +4,18 @@ This paper, we introduce the Polarization Measurement Using Counterfactual Image
 
 
 
-## 📂 Data Setup
+# 📂 Data Setup
 
-This project relies on two dataset files:
-- A ZIP archive of images
-- A cleaned CSV file that matches each image ID
+# This project relies on two dataset files:
+# - A ZIP archive of images
+# - A cleaned CSV file that matches each image ID
+# 
+# You can prepare the dataset in two ways:
 
-You can prepare the dataset in **two ways**:
+# ------------------------------------------------
+# 🔹 Option 1: Automatic Download (Recommended)
+# ------------------------------------------------
 
-### 🔹 Option 1: Automatic Download (Recommended)
-
-```bash
 # 1. Install the required dependency
 pip install requests
 
@@ -34,8 +35,10 @@ python Initial/setup_data.py
 #       ├── 0002.jpg
 #       └── ...
 
+# ------------------------------------------------
+# 🔹 Option 2: Manual Download
+# ------------------------------------------------
 
-### 🔹 Option 2: Manual Download
 # 1. Download manually from Google Drive:
 # - Images ZIP: https://drive.google.com/file/d/1yv6A7IgkxR7cqQ7pKyDC5VUtlzuZJo9v/view?usp=sharing
 # - Cleaned CSV: https://drive.google.com/file/d/1VLKIx58fEqJZ3ButMooVtRBa9_8CZdSl/view?usp=sharing
@@ -55,4 +58,10 @@ mkdir data
 #       ├── 0001.jpg
 #       ├── 0002.jpg
 #       └── ...
+
+# ------------------------------------------------
+# ✅ Once the data is ready (by either method), 
+# you can open and run the Jupyter notebooks 
+# (Scraping.ipynb, Data_Cleaning.ipynb, etc.), 
+# and they will load the dataset correctly.
 
