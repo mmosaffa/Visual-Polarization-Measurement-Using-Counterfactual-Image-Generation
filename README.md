@@ -60,9 +60,9 @@ Option 1: Automatic Download (Recommended)
 pip install requests
 python Initial/setup_data.py
 
-# This downloads:
-# - cleaned_data.csv
-# - images.zip (unzipped into data/images/)
+ This downloads:
+ - cleaned_data.csv
+ - images.zip (unzipped into data/images/)
 
 Option 2: Manual Download
 
