@@ -1,10 +1,7 @@
 # Visual-Polarization-Measurement-Using-Counterfactual-Image-Generation
-This paper, we introduce the Polarization Measurement Using Counterfactual Image Generation (PMCIG) method, which combines economic theory with generative models and multi-modal deep learning to fully utilize the richness of image data and provide a theoretically grounded measure of polarization in visual content.
+This paper, we introduce the Polarization Measurement Using Counterfactual Image Generation (PMCIG) method, which combines economic theory with generative models and multi-modal deep learning to fully utilize the richness of image data and provide a theoretically grounded measure of polarization in visual content. (Link to the Paper: https://arxiv.org/pdf/2503.10738)
 
 ---------------------------------------------------------------------------------
-
-# 📰 Political Image & Text Multimodal Analysis
-
 This repository contains data, models, and code for analyzing political news images and text using multimodal machine learning.  
 It combines scraped metadata, politician images, and counterfactuals to study polarization, prediction, and interpretability.
 
@@ -99,12 +96,13 @@ data/
 ✅ Once set up, notebooks (Git_Data_Cleaning.ipynb, Git_ML_Code.ipynb, Git_Results.ipynb) will load the correct datasets and models.
 
 ------------------------------------------------
-📑 Notebooks
+📓 Notebooks Overview
 ------------------------------------------------
 
-- Git_Data_Cleaning.ipynb → cleans and annotates scraped data, adds LDA topic features.
-- Git_ML_Code.ipynb → trains and evaluates the multimodal ML model, generates counterfactual predictions, and includes interpretability methods (Grad-CAM, t-SNE).
-- Git_Results.ipynb → replicates paper results using Final_CSV_For_Analysis.csv and ML_Model.pth.
+- Scraping.ipynb → gathers raw images and metadata from news sources, producing the initial cleaned dataset for further use.  
+- Git_Data_Cleaning.ipynb → cleans and annotates scraped data, adds LDA topic features.  
+- Git_ML_Code.ipynb → trains and evaluates the multimodal ML model, generates counterfactual predictions, and includes interpretability methods (Grad-CAM, t-SNE).  
+- Git_Results.ipynb → replicates paper results using Final_CSV_For_Analysis.csv which is based on ML_Model.pth.  
 
 ------------------------------------------------
 🛠 Requirements
@@ -118,18 +116,18 @@ System:
 
 Python packages:
 
-pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --extra-index-url https://download.pytorch.org/whl/cu117
-pip install scikit-learn==1.3.0
-pip install pandas==2.0.3
-pip install matplotlib==3.7.1 seaborn==0.12.2
-pip install tqdm==4.65.0
-pip install requests==2.31.0
-pip install nltk==3.8.1
-pip install gensim==4.3.2
-pip install facenet-pytorch==2.5.2
-pip install opencv-python==4.8.0.74
-pip install pillow==10.0.0
-pip install torch_optimizer==0.3.0
+- pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --extra-index-url https://download.pytorch.org/whl/cu117
+- pip install scikit-learn==1.3.0
+- pip install pandas==2.0.3
+- pip install matplotlib==3.7.1 seaborn==0.12.2
+- pip install tqdm==4.65.0
+- pip install requests==2.31.0
+- pip install nltk==3.8.1
+- pip install gensim==4.3.2
+- pip install facenet-pytorch==2.5.2
+- pip install opencv-python==4.8.0.74
+- pip install pillow==10.0.0
+- pip install torch_optimizer==0.3.0
 
 
 Notes:
