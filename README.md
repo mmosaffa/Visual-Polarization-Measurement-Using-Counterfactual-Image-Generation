@@ -73,25 +73,43 @@ Download files from Google Drive:
 mkdir data
 
 Place the files as:
+
 data/
+
  ├── cleaned_data.csv
+ 
  ├── images.zip
+ 
  ├── Final_CSV_For_Analysis.csv
+ 
  ├── ML_Model.pth
+ 
  └── Counterfactuals.zip
 
 Unzip images.zip and Counterfactuals.zip so the folder looks like:
+
 data/
+
  ├── cleaned_data.csv
+ 
  ├── Final_CSV_For_Analysis.csv
+ 
  ├── ML_Model.pth
+ 
  ├── images/
+ 
  │    ├── 0.jpg
+ 
  │    ├── 2.jpg
+ 
  │    └── ...
+ 
  └── Counterfactuals/
+ 
       ├── smile_set/
+      
       └── no_smile_set/
+    
 
 ✅ Once set up, notebooks (Git_Data_Cleaning.ipynb, Git_ML_Code.ipynb, Git_Results.ipynb) will load the correct datasets and models.
 
