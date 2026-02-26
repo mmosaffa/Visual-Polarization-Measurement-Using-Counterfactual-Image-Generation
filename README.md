@@ -100,6 +100,7 @@ https://github.com/mmosaffa/SmileGAN-PTI.
 ------------------------------------------------
 ⚙️ Download Options
 ------------------------------------------------
+You can set up the required data and model files using either an **automatic download script** (recommended) or **manual downloads**. Both options result in the same directory structure expected by the notebooks.
 
 Option 1: Automatic Download (Recommended)
 
@@ -173,54 +174,63 @@ data/
 
 ### Repository Structure and Notebooks
 
+This repository is organized as a sequence of Jupyter notebooks that together implement the full empirical pipeline of the paper—from data collection and preprocessing to model training, counterfactual analysis, and validation. Each notebook corresponds to a distinct stage of the analysis and can be run independently once the required inputs are available.
+
 - **`Scraping.ipynb`**  
-  Collects raw images and article-level metadata from news sources and constructs the initial cleaned dataset used throughout the project.
+  Scrapes raw politician images and article-level metadata from major news sources. This notebook constructs the initial dataset by collecting image URLs, article titles, hyperlinks, alt-text, and associated search queries, and assigns a unique numeric `ID` to each observation. The resulting output serves as the starting point for all subsequent cleaning and analysis.
 
 - **`Git_Data_Cleaning.ipynb`**  
-  Cleans and annotates the scraped data, including face verification and the construction of LDA-based topic features.
+  Processes the scraped data by cleaning metadata, verifying faces in images, and filtering out low-quality or invalid observations. This notebook also constructs additional structured features, including LDA-based topic distributions derived from article text, which are later used as inputs to the multimodal model.
 
 - **`Git_Multimodal_Code.ipynb`**  
-  Trains and evaluates the multimodal outlet-prediction model, generates counterfactual predictions, and implements interpretability analyses (e.g., Grad-CAM and t-SNE).
+  Trains and evaluates the multimodal outlet-prediction model that combines visual features, facial embeddings, textual topic features, and metadata. This notebook generates predicted outlet probabilities for both observed and counterfactual images and implements interpretability analyses such as Grad-CAM visualizations and t-SNE embeddings to understand how the model uses visual information.
 
 - **`Git_Main_Empirical_Results.ipynb`**  
-  Replicates the main empirical results in the paper using `Final_CSV_For_Analysis.csv`, which is constructed from the trained model checkpoint (`ML_Model.pth`). This notebook also implements cross-fitting procedures for estimating Overall Visual Polarization (OVP).
+  Replicates the main empirical results reported in the paper using `Final_CSV_For_Analysis.csv`, which is constructed from predictions produced by the trained model checkpoint (`ML_Model.pth`). This notebook computes key measures such as Conservative Visual Slant (CVS) and Overall Visual Polarization (OVP), produces the main figures and tables, and implements cross-fitting procedures for estimating OVP using independently trained models.
 
 - **`Git_Cross_Fitting.ipynb`**  
-  Implements the cross-fitting procedure, training two models on disjoint halves of the training data, and reports the performance and validation results for each model.
+  Implements the cross-fitting pipeline used to estimate OVP. The notebook trains two separate models on disjoint halves of the training data, evaluates their predictive performance, and saves the resulting model checkpoints (`ML_Model_1.pth`, `ML_Model_2.pth`) and prediction outputs. These models are later combined to construct cross-fitted polarization measures.
 
 - **`Git_Supplementary_Results.ipynb`**  
-  Contains supplementary analyses, including robustness checks using alternative visual features (e.g., brightness and frown/sadness), as well as an end-to-end reduced-form approach to studying visual polarization and its external validation.
+  Contains supplementary and robustness analyses that extend beyond the main results. This includes assessments of alternative visual features (e.g., brightness and frown/sadness), additional counterfactual experiments, and an end-to-end reduced-form approach to measuring visual polarization, along with external validation against established non-visual media ideology benchmarks.
   
 ------------------------------------------------
 🛠 Requirements
 ------------------------------------------------
 
-System:
-- Python 3.9 or 3.10 (recommended)
-- OS: Linux (Ubuntu 20.04+), macOS, or Windows 10/11
-- Hardware: NVIDIA GPU with CUDA 
-- CUDA: 11.7+ (if training with GPU)
+### System Requirements
 
-Python packages:
+To ensure full reproducibility of the results, we recommend the following system configuration:
 
-- pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --extra-index-url https://download.pytorch.org/whl/cu117
-- pip install scikit-learn==1.3.0
-- pip install pandas==2.0.3
-- pip install matplotlib==3.7.1 seaborn==0.12.2
-- pip install tqdm==4.65.0
-- pip install requests==2.31.0
-- pip install nltk==3.8.1
-- pip install gensim==4.3.2
-- pip install facenet-pytorch==2.5.2
-- pip install opencv-python==4.8.0.74
-- pip install pillow==10.0.0
-- pip install torch_optimizer==0.3.0
+- **Python**: 3.9 or 3.10 (tested and recommended)
+- **Operating System**:  
+  - Linux (Ubuntu 20.04 or later)  
+  - macOS  
+  - Windows 10/11
+- **Hardware**:  
+  - NVIDIA GPU with CUDA support is strongly recommended for training and large-scale inference  
+  - CPU-only execution is possible for analysis notebooks using precomputed outputs
+- **CUDA**:  
+  - CUDA 11.7 or later (required if training or running models on GPU)
 
+---
 
-Notes:
-- `facenet-pytorch` is required for MTCNN and InceptionResnetV1.
-- `torchvision.models.resnet101` is used for image backbone.
-- `torch_optimizer` provides advanced optimizers (AdamW etc.).
-- Ensure CUDA/cuDNN are installed if you plan to train on GPU.
+### Python Dependencies
 
-✅ Once this environment is set up, the notebooks (`Git_Data_Cleaning.ipynb`, `Git_ML_Code.ipynb`, `Git_Results.ipynb`) and the training code will run correctly. Both images and metadata will be aligned via the `ID` field in the CSV.
+Install the required Python packages using the versions below to match the environment used in the paper:
+
+```bash
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 \
+  --extra-index-url https://download.pytorch.org/whl/cu117
+
+pip install scikit-learn==1.3.0
+pip install pandas==2.0.3
+pip install matplotlib==3.7.1 seaborn==0.12.2
+pip install tqdm==4.65.0
+pip install requests==2.31.0
+pip install nltk==3.8.1
+pip install gensim==4.3.2
+pip install facenet-pytorch==2.5.2
+pip install opencv-python==4.8.0.74
+pip install pillow==10.0.0
+pip install torch_optimizer==0.3.0
