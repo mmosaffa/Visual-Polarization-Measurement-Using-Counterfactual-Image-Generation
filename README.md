@@ -9,53 +9,93 @@ It combines scraped metadata, politician images, and counterfactuals to study po
 📂 Data Setup
 ------------------------------------------------
 
-This project uses several files:
-- cleaned_data.csv → metadata scraped from news articles contains full data
-- images_Polarization.zip → corresponding politician images in cleaned_data.csv
-- Final_CSV_For_Analysis.csv → final dataset containing model predictions and counterfactual outputs
-- Final_CSV_For_Analysis_Model_1.csv → final dataset containing model predictions and counterfactual outputs for cross-fitting model 1
-- Final_CSV_For_Analysis_Model_2.csv → final dataset containing model predictions and counterfactual outputs for cross-fitting model 2
-- ML_Model.pth → trained multimodal model weights
-- ML_Model_1.pth → trained multimodal model weights on half of the train data
-- ML_Model_2.pth → trained multimodal model weights on the other half of the train data
-- Counterfactuals.zip → generated counterfactual image sets (smile / no smile variations)
+This project relies on a collection of datasets, trained model checkpoints, and counterfactual image sets that together support full replication of the paper’s empirical results. Below, we describe each file, its role in the pipeline, and how all components align.
 
-Alignment:
-Each image in images_Polarization.zip is named by an ID (e.g., 0.jpg, 2.jpg).
-These IDs match the ID column in cleaned_data.csv, ensuring that metadata and photos are aligned.
+### Core Data and Model Files
 
-About cleaned_data.csv (columns):
-- Unnamed: 0 → index from original scrape
-- image → URL of the associated image
-- alt → alt-text description from the HTML
-- href → hyperlink to the news article
-- title → article title
-- 0 → original search query string
-- ID → numeric ID (matches image filenames in images.zip)
+- **`cleaned_data.csv`**  
+  Contains the full set of metadata scraped from news articles. This is the foundational dataset and includes article-level information, image URLs, and unique identifiers used to link metadata to images.
 
-Example rows:
-ID=0 → Bird Strike Cripples Joe Biden Plane in California - ABC News
-ID=2 → At West Point Commencement, Joe Biden Focuses on Future Challenges - ABC News
+- **`images_Polarization.zip`**  
+  Archive of politician images corresponding to observations in `cleaned_data.csv`. Each image represents the visual input analyzed by the multimodal model.
 
-About Final_CSV_For_Analysis.csv (structure of two other CSV files, Moel_1 and Model_2 are the same as this):
-- Contains counterfactual predictions and all necessary features for replication and further analysis.
-- Predictions were obtained from the trained model (ML_Model.pth or ML_Model_1/2 for cross fitting models).
-- Counterfactual images were generated using https://www.ailabtools.com/ and are stored in Counterfactuals.zip. (Note: we also provide in-house counterfactual image generation that you can find in https://github.com/mmosaffa/SmileGAN-PTI)
+- **`Final_CSV_For_Analysis.csv`**  
+  Final analysis dataset used to generate the main empirical results in the paper. It contains model-predicted outlet probabilities, counterfactual predictions, and all derived variables required for replication.
 
-About ML_Model.pth:
-- Trained multimodal model and weights.
-- Produced using the training pipeline in Git_MultiModal_ML_Code.ipynb.
-- Used to generate predictions and interpretability analyses.
+- **`Final_CSV_For_Analysis_Model_1.csv`**  
+  Identical in structure to `Final_CSV_For_Analysis.csv`, but generated using **cross-fitting model 1**, trained on one half of the training data.
 
-About ML_Model_1.pth and ML_Model_1.pth:
-- Trained multimodal model and weights.
-- Produced using the training pipeline in Git_Cross_Fitting.ipynb.
-- Used to generate predictions and interpretability analyses.
+- **`Final_CSV_For_Analysis_Model_2.csv`**  
+  Identical in structure to `Final_CSV_For_Analysis.csv`, but generated using **cross-fitting model 2**, trained on the complementary half of the training data.
 
-About Counterfactuals.zip:
-- Contains three sets of generated images (smiling and non-smiling versions of politicians as the main, as well as other visual features such as brightness and frown for the T).
-- Generated externally using https://www.ailabtools.com/.
-- Used in Git_ML_Code.ipynb for counterfactual prediction and robustness checks.
+- **`ML_Model.pth`**  
+  Trained multimodal outlet-prediction model weights estimated using the full training dataset.
+
+- **`ML_Model_1.pth`**  
+  Trained multimodal model weights obtained by training on the first half of the training data (used for cross-fitting).
+
+- **`ML_Model_2.pth`**  
+  Trained multimodal model weights obtained by training on the second half of the training data (used for cross-fitting).
+
+- **`Counterfactuals.zip`**  
+  Archive containing generated counterfactual image sets (e.g., smile vs. no-smile) used to implement the PMCIG counterfactual estimation procedure.
+
+---
+
+### Image–Metadata Alignment
+
+Each image in `images_Polarization.zip` is named using a numeric identifier (e.g., `0.jpg`, `2.jpg`).  
+These identifiers **exactly match** the `ID` column in `cleaned_data.csv`, ensuring a one-to-one correspondence between metadata and image files throughout the pipeline.
+
+---
+
+### `cleaned_data.csv`: Column Description
+
+Key columns in `cleaned_data.csv` include:
+
+- **`Unnamed: 0`** → index carried over from the original scraping process  
+- **`image`** → URL of the associated image  
+- **`alt`** → HTML alt-text description of the image  
+- **`href`** → hyperlink to the news article  
+- **`title`** → article title  
+- **`0`** → original search query string used during scraping  
+- **`ID`** → numeric identifier matching image filenames in `images_Polarization.zip`
+
+**Example rows:**
+- `ID = 0` → *Bird Strike Cripples Joe Biden Plane in California – ABC News*  
+- `ID = 2` → *At West Point Commencement, Joe Biden Focuses on Future Challenges – ABC News*
+
+---
+
+### `Final_CSV_For_Analysis.csv`
+
+- Contains counterfactual predictions and all features required for replication and downstream analysis.
+- Predictions are generated using the trained multimodal model (`ML_Model.pth`), or `ML_Model_1.pth` / `ML_Model_2.pth` in the cross-fitting setup.
+- Counterfactual images are generated using https://www.ailabtools.com/ and stored in `Counterfactuals.zip`.
+
+**Note:**  
+An in-house counterfactual image generation pipeline is also provided at  
+https://github.com/mmosaffa/SmileGAN-PTI.
+
+---
+
+### Trained Model Checkpoints
+
+- **`ML_Model.pth`**  
+  Contains trained multimodal model weights produced using the training pipeline in `Git_Multimodal_ML_Code.ipynb`. This model is used to generate predictions and interpretability analyses in the main results.
+
+- **`ML_Model_1.pth` and `ML_Model_2.pth`**  
+  Contain trained multimodal model weights produced using the training pipeline in `Git_Cross_Fitting.ipynb`. These models are used for cross-fitted prediction, validation, and the construction of Overall Visual Polarization (OVP).
+
+---
+
+### `Counterfactuals.zip`
+
+- Contains multiple sets of generated counterfactual images:
+  - smiling and non-smiling versions of politicians (primary analysis),
+  - additional visual feature manipulations such as **brightness** and **frown (sadness)**.
+- Counterfactuals are generated externally using https://www.ailabtools.com/.
+- These images are used in `Git_Multimodal_Code.ipynb` and `Git_Supplementary_Results.ipynb` for counterfactual prediction and robustness checks.
 
 ------------------------------------------------
 ⚙️ Download Options
