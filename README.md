@@ -13,6 +13,8 @@ This project uses several files:
 - cleaned_data.csv → metadata scraped from news articles contains full data
 - images_Polarization.zip → corresponding politician images in cleaned_data.csv
 - Final_CSV_For_Analysis.csv → final dataset containing model predictions and counterfactual outputs
+- Final_CSV_For_Analysis_Model_1.csv → final dataset containing model predictions and counterfactual outputs for cross-fitting model 1
+- Final_CSV_For_Analysis_Model_2.csv → final dataset containing model predictions and counterfactual outputs for cross-fitting model 2
 - ML_Model.pth → trained multimodal model weights
 - ML_Model_1.pth → trained multimodal model weights on half of the train data
 - ML_Model_2.pth → trained multimodal model weights on the other half of the train data
@@ -35,14 +37,19 @@ Example rows:
 ID=0 → Bird Strike Cripples Joe Biden Plane in California - ABC News
 ID=2 → At West Point Commencement, Joe Biden Focuses on Future Challenges - ABC News
 
-About Final_CSV_For_Analysis.csv:
+About Final_CSV_For_Analysis.csv (structure of two other CSV files, Moel_1 and Model_2 are the same as this):
 - Contains counterfactual predictions and all necessary features for replication and further analysis.
-- Predictions were obtained from the trained model (ML_Model.pth).
-- Counterfactual images were generated using https://www.ailabtools.com/ and are stored in Counterfactuals.zip.
+- Predictions were obtained from the trained model (ML_Model.pth or ML_Model_1/2 for cross fitting models).
+- Counterfactual images were generated using https://www.ailabtools.com/ and are stored in Counterfactuals.zip. (Note: we also provide in-house counterfactual image generation that you can find in https://github.com/mmosaffa/SmileGAN-PTI)
 
 About ML_Model.pth:
 - Trained multimodal model and weights.
-- Produced using the training pipeline in Git_ML_Code.ipynb.
+- Produced using the training pipeline in Git_MultiModal_ML_Code.ipynb.
+- Used to generate predictions and interpretability analyses.
+
+About ML_Model_1.pth and ML_Model_1.pth:
+- Trained multimodal model and weights.
+- Produced using the training pipeline in Git_Cross_Fitting.ipynb.
 - Used to generate predictions and interpretability analyses.
 
 About Counterfactuals.zip:
