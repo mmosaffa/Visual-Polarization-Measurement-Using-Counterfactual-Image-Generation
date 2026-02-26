@@ -14,6 +14,8 @@ This project uses several files:
 - images_Polarization.zip → corresponding politician images in cleaned_data.csv
 - Final_CSV_For_Analysis.csv → final dataset containing model predictions and counterfactual outputs
 - ML_Model.pth → trained multimodal model weights
+- ML_Model_1.pth → trained multimodal model weights on half of the train data
+- ML_Model_2.pth → trained multimodal model weights on the other half of the train data
 - Counterfactuals.zip → generated counterfactual image sets (smile / no smile variations)
 
 Alignment:
@@ -44,7 +46,7 @@ About ML_Model.pth:
 - Used to generate predictions and interpretability analyses.
 
 About Counterfactuals.zip:
-- Contains three sets of generated images (smiling, neutral, non-smiling versions of politicians).
+- Contains three sets of generated images (smiling and non-smiling versions of politicians as the main, as well as other visual features such as brightness and frown for the T).
 - Generated externally using https://www.ailabtools.com/.
 - Used in Git_ML_Code.ipynb for counterfactual prediction and robustness checks.
 
@@ -106,10 +108,11 @@ data/
  
  └── Counterfactuals/
  
-      ├── smile_set/
+      ├── no_smile_set/
       
-      └── no_smile_set/
-    
+      └── smile_set/
+      └── brightness_set/
+      └── frown_set/
 
 ✅ Once set up, notebooks (Git_Data_Cleaning.ipynb, Git_ML_Code.ipynb, Git_Results.ipynb) will load the correct datasets and models.
 
@@ -117,11 +120,26 @@ data/
 📓 Notebooks Overview
 ------------------------------------------------
 
-- Scraping.ipynb → gathers raw images and metadata from news sources, producing the initial cleaned dataset for further use.  
-- Git_Data_Cleaning.ipynb → cleans and annotates scraped data, adds LDA topic features.  
-- Git_ML_Code.ipynb → trains and evaluates the multimodal ML model, generates counterfactual predictions, and includes interpretability methods (Grad-CAM, t-SNE).  
-- Git_Results.ipynb → replicates paper results using Final_CSV_For_Analysis.csv which is based on ML_Model.pth.  
+### Repository Structure and Notebooks
 
+- **`Scraping.ipynb`**  
+  Collects raw images and article-level metadata from news sources and constructs the initial cleaned dataset used throughout the project.
+
+- **`Git_Data_Cleaning.ipynb`**  
+  Cleans and annotates the scraped data, including face verification and the construction of LDA-based topic features.
+
+- **`Git_Multimodal_Code.ipynb`**  
+  Trains and evaluates the multimodal outlet-prediction model, generates counterfactual predictions, and implements interpretability analyses (e.g., Grad-CAM and t-SNE).
+
+- **`Git_Main_Empirical_Results.ipynb`**  
+  Replicates the main empirical results in the paper using `Final_CSV_For_Analysis.csv`, which is constructed from the trained model checkpoint (`ML_Model.pth`). This notebook also implements cross-fitting procedures for estimating Overall Visual Polarization (OVP).
+
+- **`Git_Cross_Fitting.ipynb`**  
+  Implements the cross-fitting procedure, training two models on disjoint halves of the training data, and reports the performance and validation results for each model.
+
+- **`Git_Supplementary_Results.ipynb`**  
+  Contains supplementary analyses, including robustness checks using alternative visual features (e.g., brightness and frown/sadness), as well as an end-to-end reduced-form approach to studying visual polarization and its external validation.
+  
 ------------------------------------------------
 🛠 Requirements
 ------------------------------------------------
